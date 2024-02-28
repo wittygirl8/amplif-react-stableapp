@@ -29,30 +29,29 @@ class App extends Component {
     console.log(prompt);
     console.log(process.env.NODE_ENV);
 
-    const api =
-      process.env.NODE_ENV === 'development'
-        ? '/staged/sta'
-        : 'https://xqrmtyojt6.execute-api.eu-north-1.amazonaws.com/staged/sta';
+    const api = 'https://xqrmtyojt6.execute-api.eu-north-1.amazonaws.com/staged/sta';
     const data = { data: e.target.searchQuery.value };
     console.log(data);
-    axios({
-      method: 'POST',
+    axios.post('https://xqrmtyojt6.execute-api.eu-north-1.amazonaws.com/staged/sta', {
       data: JSON.stringify(data),
-      headers: { 'Content-Type': 'application/json' },
-      url: api,
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-      .then((response) => {
-        console.log(response);
-        this.setState({ imgSrc: response.data.body });
+    .then((response) => {
+      console.log(response);
+      this.setState({ imgSrc: response.data.body });
 
-        setTimeout(() => {
-          this.hideLoading();
-          this.setState({ val: '' });
-        }, 500);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      setTimeout(() => {
+        this.hideLoading();
+        this.setState({ val: '' });
+      }, 500);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+    
   };
   render() {
     return (
